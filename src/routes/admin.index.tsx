@@ -211,7 +211,7 @@ function AdminPage() {
             )}
           </TabsContent>
 
-          <TabsContent value="gallery" className="mt-6">
+          <TabsContent value="posts" className="mt-6">
             <AdminPosts />
           </TabsContent>
 
