@@ -18,14 +18,13 @@ const schema = z.object({
   full_name: z.string().trim().min(1, "Name required").max(100),
   email: z.string().trim().email("Invalid email").max(255),
   password: z.string().min(6, "Password must be at least 6 characters").max(100),
-  phone: z.string().trim().min(7, "Phone required").max(20),
   referral_code: z.string().trim().max(12).optional().or(z.literal("")),
 });
 
 function SignupPage() {
   const navigate = useNavigate();
   const { user, loading } = useAuth();
-  const [form, setForm] = useState({ full_name: "", email: "", password: "", phone: "", referral_code: "" });
+  const [form, setForm] = useState({ full_name: "", email: "", password: "", referral_code: "" });
   const [showPwd, setShowPwd] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
@@ -61,7 +60,6 @@ function SignupPage() {
         emailRedirectTo: redirectUrl,
         data: {
           full_name: parsed.data.full_name,
-          phone: parsed.data.phone,
           referral_code: parsed.data.referral_code?.toUpperCase() || undefined,
         },
       },
@@ -122,11 +120,6 @@ function SignupPage() {
                 {showPwd ? <EyeOff className="h-4 w-4 sm:h-5 sm:w-5" /> : <Eye className="h-4 w-4 sm:h-5 sm:w-5" />}
               </button>
             </div>
-          </div>
-
-          <div className="space-y-1.5 sm:space-y-2">
-            <Label htmlFor="phone" className="text-primary text-xs sm:text-sm">Phone Number</Label>
-            <Input id="phone" type="tel" placeholder="+234 123 456 7890" value={form.phone} onChange={update("phone")} className="h-10 sm:h-12 bg-card text-sm" />
           </div>
 
           <div className="space-y-1.5 sm:space-y-2">
