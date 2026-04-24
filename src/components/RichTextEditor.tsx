@@ -95,7 +95,7 @@ export function RichTextEditor({ content, onChange, placeholder = 'Write your po
     editor?.chain().focus().setImage({ src: pub.publicUrl }).run();
     setUploading(false);
     toast.success('Image added');
-  }, [editor]);
+  };
 
   const addLink = useCallback(() => {
     if (linkUrl && editor) {
