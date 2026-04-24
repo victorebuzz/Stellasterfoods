@@ -4,9 +4,9 @@ import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
+import { RichTextEditor } from "@/components/RichTextEditor";
 import {
   Dialog,
   DialogContent,
@@ -157,15 +157,17 @@ export function AdminPosts() {
               />
             </div>
           </div>
+          
+          {/* Rich Text Editor */}
           <div className="space-y-2">
-            <Label>Content (announcement)</Label>
-            <Textarea
-              placeholder="Write your post content here..."
-              value={form.content}
-              onChange={(e) => setForm({ ...form, content: e.target.value })}
-              rows={4}
+            <Label>Content</Label>
+            <RichTextEditor
+              content={form.content}
+              onChange={(html) => setForm({ ...form, content: html })}
+              placeholder="Write your post content with rich formatting..."
             />
           </div>
+          
           <label className="flex items-center gap-2 cursor-pointer">
             <Checkbox
               checked={form.is_post}
@@ -173,11 +175,12 @@ export function AdminPosts() {
             />
             <span className="text-sm font-medium">Mark as announcement post</span>
           </label>
+          
           <label className="block cursor-pointer rounded-xl border-2 border-dashed border-primary/40 bg-primary/5 p-4 sm:p-6 text-center transition hover:border-primary">
             <div className="text-primary">
               <Upload className="mx-auto mb-2 h-6 w-6" />
               <p className="text-sm font-medium">
-                {uploading ? "Uploading..." : "Click to upload image"}
+                {uploading ? "Uploading..." : "Click to upload cover image"}
               </p>
               <p className="text-xs text-muted-foreground mt-1">
                 JPG or PNG, up to 5MB
@@ -227,7 +230,7 @@ export function AdminPosts() {
                   <h4 className="font-bold text-sm line-clamp-1">{post.title}</h4>
                 )}
                 <p className="text-xs text-muted-foreground line-clamp-2 mt-1">
-                  {post.content || post.caption || "No content"}
+                  {post.content?.replace(/<[^>]*>/g, '') || post.caption || "No content"}
                 </p>
                 <div className="flex items-center justify-end gap-2 mt-3">
                   <Button
@@ -255,7 +258,7 @@ export function AdminPosts() {
 
       {/* Edit Dialog */}
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto">
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
           <DialogHeader>
             <DialogTitle>Edit Post</DialogTitle>
           </DialogHeader>
@@ -285,15 +288,17 @@ export function AdminPosts() {
                 maxLength={120}
               />
             </div>
+            
+            {/* Rich Text Editor in Dialog */}
             <div className="space-y-2">
               <Label>Content</Label>
-              <Textarea
-                placeholder="Write your post content here..."
-                value={form.content}
-                onChange={(e) => setForm({ ...form, content: e.target.value })}
-                rows={5}
+              <RichTextEditor
+                content={form.content}
+                onChange={(html) => setForm({ ...form, content: html })}
+                placeholder="Write your post content with rich formatting..."
               />
             </div>
+            
             <label className="flex items-center gap-2 cursor-pointer">
               <Checkbox
                 checked={form.is_post}

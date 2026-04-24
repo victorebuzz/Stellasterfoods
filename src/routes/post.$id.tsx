@@ -114,13 +114,10 @@ function PostPage() {
 
             {/* Content */}
             {post.content && (
-              <div className="mt-4 sm:mt-6 prose prose-sm sm:prose max-w-none">
-                {post.content.split("\n").map((paragraph, i) => (
-                  <p key={i} className="mb-4 text-sm sm:text-base leading-relaxed">
-                    {paragraph}
-                  </p>
-                ))}
-              </div>
+              <div 
+                className="mt-4 sm:mt-6 prose prose-sm sm:prose max-w-none prose-img:rounded-lg prose-a:text-primary prose-a:underline"
+                dangerouslySetInnerHTML={{ __html: post.content }}
+              />
             )}
 
             {/* Fallback if no content */}
