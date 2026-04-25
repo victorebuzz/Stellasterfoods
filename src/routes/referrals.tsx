@@ -64,7 +64,7 @@ function ReferralsPage() {
       try {
         await navigator.share({
           title: "Join Stellaster Kitchen",
-          text: `Use my referral code ${stats.code} to join Stellaster Kitchen!`,
+          text: `Use my referral code ${stats.code} to join Stellaster Kitchen and get 50% off your first order!`,
           url: link,
         });
       } catch {
